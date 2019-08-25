@@ -1,21 +1,21 @@
-; hello world example
+; hello world DMG example by tmk @ https://github.com/gitendo/
 
-	INCLUDE "hardware.inc"
+	INCLUDE "hardware.inc"			; system defines
 
 	SECTION	"Start",ROM0[$100]		; start vector, followed by header data applied by rgbfix.exe
 	nop
-	jp	Start
+	jp	start
 
         SECTION "Example",ROM0[$150]		; code starts here
 
-Start:
+start:
 	di					; disable interrupts
 	ld	sp,$E000			; setup stack
 
-.wait_vbl
+.wait_vbl					; wait for vblank to properly disable lcd
 	ld	a,[rLY]	
 	cp	$90
-	jr	nz,.wait_vbl			; wait for vblank to properly disable lcd
+	jr	nz,.wait_vbl
 
 	xor	a
 	ld	[rIF],a				; reset important registers
@@ -38,11 +38,11 @@ Start:
 	ld	b,$18				; a = 0, bc should be $1800; c = 0 here, so..
 	call	fill
 
-	ld	a,$20				; ascii code for 'space'
+	ld	a,$20				; ascii code for 'space' character
 
-						; no need to setup hl since _SCRN0 and _SCRN1 are part of _VRAM, just continue
+						; no need to setup hl since _SCRN0 ($9800) and _SCRN1 ($9C00) are part of _VRAM, just continue
 
-	ld	b,8				; bc should be $800; c = 0 here, so..
+	ld	b,8				; bc should be $800 (_SCRN0/1 are 32*32 bytes); c = 0 here, so..
 	call	fill
 
 	ld	a,%10010011			; bits: 7-6 = 1st color, 5-4 = 2nd, 3-2 = 3rd and 1-0 = 4th color
@@ -52,7 +52,7 @@ Start:
 	ld	[rOBP1],a
 
 	ld	hl,font				; font data
-	ld	de,_VRAM+$200			; place it here to get ascii mapping
+	ld	de,_VRAM+$200			; place it here to get ascii mapping ('space' code is $20, tile size $10)
 	ld	bc,1776				; font_8x8.chr file size
 	call 	copy
 
@@ -66,10 +66,9 @@ Start:
 	ld	[rLCDC],a			; enable lcd
 
 .the_end
-	halt
-	nop
-
-	jr	.the_end
+	halt					; save battery
+;	nop					; nop after halt is mandatory but rgbasm takes care of it :)
+	jr	.the_end			; endless loop
 
 ;-------------------------------------------------------------------------------	
 copy:
@@ -77,6 +76,7 @@ copy:
 ; hl - source address
 ; de - destination
 ; bc - size
+
 	inc	b
 	inc	c
 	jr	.skip
