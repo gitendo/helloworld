@@ -1,8 +1,7 @@
-; display picture composed of 355 unique tiles
-; [gameboy demake] the secret of donkey kong island pixeled by tomic
-; http://pixeljoint.com/pixelart/28278.htm
+; display picture composed of 355 unique tiles by tmk @ https://github.com/gitendo/
+; [gameboy demake] the secret of donkey kong island pixeled by tomic @ http://pixeljoint.com/pixelart/28278.htm
 
-	INCLUDE "hardware.inc"
+	INCLUDE "hardware.inc"			; system defines
 
         SECTION "VBL",ROM0[$0040]		; vblank interrupt handler
 	jp	vbl
@@ -43,7 +42,7 @@ start:
 	ld	c,$80				; a = 0, b = 0 here, so let's save a byte and 4 cycles (ld c,$80 - 2/8 vs ld bc,$80 - 3/12)
 	call	fill
 						; no point in clearing vram, we'll overwrite it with picture data anyway
-						; lcdc is disabled so we have 'easy' access to vram
+						; lcdc is already disabled so we have 'easy' access to vram
 
 	ld	hl,picture_top_chr		; upper part takes 255 tiles
 	ld	de,_VRAM			; place it between $8000-8FFF (tiles are numbered here from 0 to 255)
@@ -60,7 +59,7 @@ start:
 	ld	bc,416				; tsodki1.map file size
 	call	copy
 
-	ld	hl,picture_bottom_map		; map for picture's bottom part (also padded)
+	ld	hl,picture_bottom_map		; picture's map bottom part (also padded)
 						; de = _SCRN0+416, so we continue right after upper part
 	ld	bc,160				; tsodki2.map file size
 	call	copy
@@ -85,21 +84,20 @@ start:
 	ei					; enable
 
 .the_end
-	halt
-;	nop					; rgbasm takes care of it
-	jr	.the_end
-
-
-vbl:						; vblank interrupt - executed every frame when LY=144
-	ld	hl,rLCDC			; contains lcd setup
-	set	4,[hl]				; restore map location to $9800, currently it's $9C00
-	reti					; return from interrupt
+	halt					; save battery
+;	nop					; nop after halt is mandatory but rgbasm takes care of it :)
+	jr	.the_end			; endless loop
 
 
 lcdc:						; lcdc interrupt - executed every frame when LY=104 (end of picture's upper part)
 	ld	hl,rLCDC			; contains lcd setup
 	res	4,[hl]				; change map location to $9C00, currently it's $9800
 	reti
+
+vbl:						; vblank interrupt - executed every frame when LY=144
+	ld	hl,rLCDC			; contains lcd setup
+	set	4,[hl]				; restore map location to $9800, currently it's $9C00
+	reti					; return from interrupt
 
 
 ;-------------------------------------------------------------------------------	
