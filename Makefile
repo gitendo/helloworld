@@ -2,8 +2,10 @@ AS := rgbasm
 ASFLAGS := -i inc/ -i data/ -o
 LD := rgblink
 LDFLAGS1 := -d -o
+LDFLAGS2 := -o
 FX := rgbfix
-FXFLAGS := -p 0 -r 0 -v
+FXFLAGS1 := -p 0 -r 0 -t DMG_EXAMPLE -v
+FXFLAGS2 := -C -p 0 -r 0 -t CGB_EXAMPLE -v
 
 dmg_src := $(wildcard dmg/*.asm)
 cgb_src := $(wildcard cgb/*.asm)
@@ -14,7 +16,11 @@ all:    $(dmg_rom) $(cgb_rom)
 
 %.gb: %.o
         $(LD) $(LDFLAGS1) $@ $<
-        $(FX) $(FXFLAGS) $@
+        $(FX) $(FXFLAGS1) $@
+
+%.gbc: %.o
+        $(LD) $(LDFLAGS2) $@ $<
+        $(FX) $(FXFLAGS2) $@
 
 %.o: %.asm
         $(AS) $(ASFLAGS) $@ $<
