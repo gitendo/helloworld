@@ -70,10 +70,6 @@ start:
 	ld	[rOBP0],a			; obj palettes (not used in this example)
 	ld	[rOBP1],a
 	
-	ld	a,LCDCF_ON | LCDCF_BG8000 | LCDCF_BG9800 | LCDCF_OBJ8 | LCDCF_OBJOFF | LCDCF_WINOFF | LCDCF_BGON
-						; lcd setup: tiles at $8000, map at $9800, 8x8 sprites (disabled), no window, etc.
-	ld	[rLCDC],a			; enable lcd
-
 	ld	a,104				; this is where upper part of picture ends and bottom starts, we'll switch map base here
 	ld	[rLYC],a			; line at which lcdc interrupt will be fired
 	ld	a,STATF_LYC			; important!
@@ -81,7 +77,12 @@ start:
 
 	ld	a,IEF_VBLANK | IEF_LCDC		; vblank and lcdc interrupts
 	ld	[rIE],a				; setup
-	ei					; enable
+
+	ld	a,LCDCF_ON | LCDCF_BG8000 | LCDCF_BG9800 | LCDCF_OBJ8 | LCDCF_OBJOFF | LCDCF_WINOFF | LCDCF_BGON
+						; lcd setup: tiles at $8000, map at $9800, 8x8 sprites (disabled), no window, etc.
+	ld	[rLCDC],a			; enable lcd
+
+	ei					; enable interrupts
 
 .the_end
 	halt					; save battery
