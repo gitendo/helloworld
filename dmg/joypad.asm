@@ -90,31 +90,31 @@ vbl:						; update screen
 	ld	[hl],a                          ; since it's vblank we have easy access to vram, update 1st entry
 	add	hl,bc				; and go to another
 
-	ld	a,[btn_up]			; repeat 7 times ...
+	ldh	a,[btn_up]			; repeat 7 times ...
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_lt]
+	ldh	a,[btn_lt]
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_rt]
+	ldh	a,[btn_rt]
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_st]
+	ldh	a,[btn_st]
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_sl]
+	ldh	a,[btn_sl]
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_b]
+	ldh	a,[btn_b]
 	ld	[hl],a
 	add	hl,bc	
 
-	ld	a,[btn_a]
+	ldh	a,[btn_a]
 	ld	[hl],a
 
 	reti
