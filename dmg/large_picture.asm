@@ -1,5 +1,9 @@
-; display picture composed of 355 unique tiles by tmk @ https://github.com/gitendo/
+; -----------------------------------------------------------------------------
+; Example: Display picture composed of 355 unique tiles
+; -----------------------------------------------------------------------------
 ; [gameboy demake] the secret of donkey kong island pixeled by tomic @ http://pixeljoint.com/pixelart/28278.htm
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
