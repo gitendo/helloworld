@@ -1,6 +1,10 @@
-; window example by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
+; Example: Window
+; -----------------------------------------------------------------------------
 ; [gameboy demake] pick up that can! pixeled by b236 @ http://pixeljoint.com/pixelart/129407.htm
-; press select to enable/disable window and d-pad to change its coordinates
+; Press select to enable/disable window and use d-pad to change its coordinates.
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
