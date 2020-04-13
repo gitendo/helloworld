@@ -1,4 +1,9 @@
-; joypad reading example by tmk @ https://github.com/gitendo/
+; -----------------------------------------------------------------------------
+; Example: Reading joypad state
+; -----------------------------------------------------------------------------
+; Font comes from ZX Spectrum - https://en.wikipedia.org/wiki/ZX_Spectrum_character_set
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
