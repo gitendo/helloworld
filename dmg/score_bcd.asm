@@ -68,7 +68,7 @@ start:
 
 	ld	hl,text				; menu text
 	ld	de,_SCRN0+$A0			; center it a bit
-	ld	b,6				; it has 6 lines
+	ld	b,8				; it has 8 lines
 	call	copy_text
 
 	ld	a,IEF_VBLANK			; vblank interrupt
@@ -350,7 +350,9 @@ text:
 	DB	"                    "
 	DB	"       00000        "
 	DB	"                    "
-	DB	"  Press UP or DOWN  "
+	DB	"  Press UP or DOWN, "
+	DB	"   LEFT or RIGHT,   "
+	DB	"      A or B        "
 	DB	"  to update score.  "
 
 ;-------------------------------------------------------------------------------
