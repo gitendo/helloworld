@@ -1,5 +1,9 @@
-; meta sprite example by tmk @ https://github.com/gitendo/
+; -----------------------------------------------------------------------------
+; Example: Meta sprite
+; -----------------------------------------------------------------------------
 ; Knight pixelled by Stratto @ http://pixeljoint.com/pixelart/52412.htm
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
