@@ -1,5 +1,11 @@
-; bcd score example by tmk @ https://github.com/gitendo/helloworld
-; this is alternative to score_hex.asm, if you've never heard about bcd here's some reading: https://ehaskins.com/2018-01-30%20Z80%20DAA/
+; -----------------------------------------------------------------------------
+; Example: Game score in Binary Coded Decimal
+; -----------------------------------------------------------------------------
+; This is alternative approach to score_hex.asm. If you've never heard of BCD
+; here's some reading: https://ehaskins.com/2018-01-30%20Z80%20DAA/
+; Font comes from ZX Spectrum - https://en.wikipedia.org/wiki/ZX_Spectrum_character_set
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
@@ -84,21 +90,21 @@ start:
 vbl:						; update screen
 	ld	hl,score
 	ld	de,_SCRN0+$E7			; this points exactly at map coordinate where score string is stored
-	ld	c,3				; score string length
+	ld	c,3				; score takes 3 bytes, each byte holds 2 digits
 .copy						; copy from hram to vram without waiting for access since it's vblank
-	ld	a,[hl+]
-	ld	b,a
-	and	a,$F0				; turn bcd values 0 - 99 to ascii notation $30 - $39
-	swap	a
+	ld	a,[hl+]				; get byte
+	ld	b,a				; store it for further processing
+	and	a,$F0				; leave upper nible, remove lower one
+	swap	a				; swap nibbles with places, lower is upper now and upper is lower
+	or	$30				; upper nibble is 3, lower keeps its value - we have valid number in ascii notation now
+	ld	[de],a				; put it on screen - map actually
+	inc	de				; next map entry
+	ld	a,b				; restore byte and repeat process above to lower nibble
+	and	a,$0F
 	or	$30
 	ld	[de],a
 	inc	de
-	ld	a,b
-	and	a,$0F				; turn bcd values 0 - 99 to ascii notation $30 - $39
-	or	$30
-	ld	[de],a
-	inc	de
-	dec	c
+	dec	c				; repeat 3 times
 	jr	nz,.copy
 
 	reti
@@ -278,13 +284,12 @@ read_keys:
 ;-------------------------------------------------------------------------------
 increase_score:
 ;-------------------------------------------------------------------------------
-; score consists of 3 bytes, each byte holds values in bcd format ie. 00 - 99
+; score consists of 3 bytes, each byte holds two digits in bcd format ie. 00 - 99
 
 ; bc - points to a pair of digits in score
 ;      0 - hundreds of thousands and tens of thousands, 1 - thousands and hundreds, 2 - tens and ones
-;      value of register a (upper/lower byte) decides which one gets increased
 
-; a  - value to add to score, use bcd values only ie. $01, $20, $09, etc.
+; a  - value of register (upper/lower byte) decides which digit gets increased, use bcd values only ie. $01, $20, $09, etc.
 
 ; hl - score offset in ram
 
@@ -292,10 +297,10 @@ increase_score:
 	add	hl,bc				; move to a pair of digits to be updated
 	inc	c				; recycle pointer to a counter of pair of digits left
 
-	add	a,[hl]				; add value to pair of digits
+	add	a,[hl]				; add selected pair of digits to value
 	daa					; keep result as bcd
 	ld	[hl-],a				; store it and move to another pair of digits
-	ret	nc				; carry flag is set when overflow occurs ie. $99 + $20 = $19
+	ret	nc				; carry flag is set when overflow occurs (ie. $99 + $20 = $19), we need to update other pairs then
 
 .recurse
 	dec	c				; counter keeps track of pair of digits we're dealing with
@@ -304,7 +309,7 @@ increase_score:
 	adc	a,[hl]				; carry flag is set so 1 will be added to adjacent pair of digits
 	daa					; keep result as bcd
 	ld	[hl-],a				; store it
-	call	c,.recurse			; if there was overflow go to another pair of digits (update the rest of the score)
+	call	c,.recurse			; if there's overflow go to another pair of digits (update the rest of the score)
 	ret
 
 ;-------------------------------------------------------------------------------
