@@ -1,5 +1,9 @@
-; display picture composed of 242 unique tiles by tmk @ https://github.com/gitendo/
+; -----------------------------------------------------------------------------
+; Example: Display picture composed of 242 unique tiles
+; -----------------------------------------------------------------------------
 ; Gameboy Horror pixeled by vassink @ http://pixeljoint.com/pixelart/61800.htm
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
