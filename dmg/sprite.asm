@@ -1,4 +1,9 @@
-; single, d-pad moveable sprite example by tmk @ https://github.com/gitendo/
+; -----------------------------------------------------------------------------
+; Example: Single, d-pad moveable sprite
+; -----------------------------------------------------------------------------
+; Font comes from ZX Spectrum - https://en.wikipedia.org/wiki/ZX_Spectrum_character_set
+; More examples by tmk @ https://github.com/gitendo/helloworld
+; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
 
