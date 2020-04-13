@@ -1,6 +1,8 @@
 ; -----------------------------------------------------------------------------
-; Example: Background scroll (clockwise), tmk @ https://github.com/gitendo/
+; Example: Background scroll (clockwise)
+; -----------------------------------------------------------------------------
 ; Optical Illusion pixeled by Phexion @ http://pixeljoint.com/pixelart/81815.htm
+; More examples by tmk @ https://github.com/gitendo/helloworld
 ; -----------------------------------------------------------------------------
 
 	INCLUDE "hardware.inc"			; system defines
