@@ -11,6 +11,7 @@ This repo started as simple "Hello world!" for Gameboy (DMG) written in assembly
 - Window
 - Single, d-pad moveable sprite
 - Meta sprite
+- 8x8 sprite collision detection
 - Game score in Binary Coded Decimal
 - Game score in hexadecimal
 - ClockBoy - timer based clock
