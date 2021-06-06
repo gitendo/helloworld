@@ -305,7 +305,7 @@ increase_score:
 .recurse
 	dec	c				; counter keeps track of pair of digits we're dealing with
 	ret	z
-	ld	a,b				; b = 0 here, we save 1 byte and 4 cycles by not using ld b,0
+	ld	a,b				; b = 0 here, we save 1 byte and 4 cycles by not using ld a,0
 	adc	a,[hl]				; carry flag is set so 1 will be added to adjacent pair of digits
 	daa					; keep result as bcd
 	ld	[hl-],a				; store it
