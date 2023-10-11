@@ -1,3 +1,10 @@
+### Notice
+Starting October 12th, 2023 GitHub is enforcing mandatory [two-factor authentication](https://github.blog/2023-03-09-raising-the-bar-for-software-security-github-2fa-begins-march-13/) on my account.  
+I'm not going to comply and move all my activity to GitLab instead.  
+Any future updates / releases will be available at: [https://gitlab.com/gitendo/helloworld](https://gitlab.com/gitendo/helloworld)  
+Thanks and see you there!
+___
+
 # Hello Game Boy!
 This repo started as simple "Hello world!" for Gameboy (DMG) written in assembly language. Few stars later I thought I could start adding some other examples as well, including Game Boy Color (CGB). So here it is - new folder structure, makefiles for Windows / Linux and content that will gradually follow. Everything commented and ready to assemble and link with [RGBASM](https://github.com/rednex/rgbds). Currently it contains:
 
